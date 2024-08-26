@@ -79,11 +79,18 @@ const perguntas = [
 
 let atual = 0;
 let perguntaAtual;
+let historiaFinal = "";
 
 function mostraPergunta(){
-    caixaAlternativas.textContent="";
+    if(atual >= perguntas.length){
+        mostraResultado();
+        return;
+        }
+    
     perguntaAtual = perguntas[atual];
     caixaPerguntas.textContent = perguntas[atual].enunciado;
+    caixaAlternativas.textContent="";
+    textoResultado.textContent = "";
     mostraAlternativas();
 }
 
@@ -92,6 +99,13 @@ function mostraAlternativas(){
         const botaoAlternativas = document.createElement("button");
         botaoAlternativas.textContent = alternativa.texto;
         botaoAlternativas.addEventListener("click", function(){
+        
+        function respostaSelecionada(opcaoSelecionada){
+const afirmacao = opcaoSelecionada.afirmacao;
+historiaFinal += afirmacao + " ";
+historiaFinal = afirmacao;
+
+}
             atual++;
             mostraPergunta();
         });        
@@ -100,3 +114,10 @@ function mostraAlternativas(){
 }
 
 mostraPergunta();
+
+
+function mostraResultado(){
+    caixaPerguntas.textContent = "Em 2049...";
+    textoResultado.textContent = historiaFinal;
+    caixaAlternativas.textContent = "";
+}
